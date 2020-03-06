@@ -36,4 +36,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function assignRole($role)
+    {
+        $this->roles()->syncWithoutDetaching([$role->id]);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_user');
+    }
+
+    public function assignProject($project)
+    {
+        $this->projects()->syncWithoutDetaching([$project->id]);
+    }
 }
