@@ -11,27 +11,36 @@
             @endif
             <div class="card">
                 <div class="card-header">Your Profile</div>
-                <div class="card-body">
-                    <ul>
-                        <li>Personal Auth-Token: abcdefg12345</li>
-                    </ul>
-                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ Auth::user()->name }}</li>
+                    <li class="list-group-item">Personal Auth-Token: abcdefg12345</li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="row justify-content-between mt-4">
-        <div class="col-md-6">
+    <div class="row mt-4">
+        @if ($projects)
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Projects you own</div>
-                <div class="card-body"></div>
+                <div class="card-header">Your Projects</div>
+                <ul class="list-group list-group-flush">
+                    @foreach ($projects as $project)
+                        <li class="list-group-item d-flex justify-content-between">
+                            <h5>{{ $project->name }}</h5>
+                            <div>
+                                @can('publish-project', $project)
+                                    <button class="btn btn-primary">Publish</button>
+                                @endcan
+                                @can('delete-project', $project)
+                                    <button class="btn btn-outline-danger">Delete</button>
+                                @endcan
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Projects you are part of</div>
-                <div class="card-body"></div>
-            </div>
-        </div>
+        @endif
     </div>
 </div>
 @endsection

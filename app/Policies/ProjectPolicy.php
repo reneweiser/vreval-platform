@@ -10,11 +10,6 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if ($user->id === 10) return true;
-    }
-
     /**
      * Determine whether the user can view any projects.
      *
@@ -46,7 +41,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        return $user->can(['create-project']);
+        //
     }
 
     /**
@@ -70,7 +65,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-        //
+        return $user->isRoleOnProject('project-owner', $project);
     }
 
     /**
@@ -106,6 +101,6 @@ class ProjectPolicy
      */
     public function publish(User $user, Project $project)
     {
-        return $user->roleOn($project)->can(['publish-project']);
+        return $user->isRoleOnProject('project-owner', $project);
     }
 }

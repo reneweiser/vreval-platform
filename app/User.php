@@ -56,4 +56,14 @@ class User extends Authenticatable
     {
         $this->projects()->syncWithoutDetaching([$project->id]);
     }
+
+    public function isRoleOnProject($role, $project)
+    {
+        $requiredRole = Role::where('slug', $role)->first();
+        return $this->projects->contains($project)
+            && $this->projects()
+                ->wherePivot('role_id', $requiredRole->id)
+                ->get()
+                ->contains($project);
+    }
 }
