@@ -28,7 +28,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Your Projects</h6>
                 </div>
                 <ul class="list-group list-group-flush">
-                    @foreach ($projects as $project)
+                    @forelse ($projects as $project)
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <h5 class="m-0">{{ $project->name }}</h5>
                             <div class="dropdown">
@@ -40,7 +40,7 @@
                                         <button class="dropdown-item" type="button">Invite User</button>
                                     @endcan
                                     @can('update-project', $project)
-                                        <button class="dropdown-item" type="button">Edit</button>
+                                        <a class="dropdown-item" href="{{ route('project.edit', ['project' => $project->id]) }}">Edit</a>
                                     @endcan
                                     @can('publish-project', $project)
                                         <button class="dropdown-item" type="button">Publish</button>
@@ -51,7 +51,9 @@
                                 </div>
                             </div>
                         </li>
-                    @endforeach
+                    @empty
+                        <p>You don't have and Projects yet.</p>
+                    @endforelse
                 </ul>
                 <div class="card-footer d-flex justify-content-end">
                     @can('create-project')
