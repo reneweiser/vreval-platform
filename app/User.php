@@ -49,7 +49,10 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_user');
+        return $this->belongsToMany(Project::class, 'project_user')
+            ->using(ProjectUser::class)
+            ->as('responsibility')
+            ->withPivot('role_id');
     }
 
     public function assignProject($project)
@@ -57,13 +60,11 @@ class User extends Authenticatable
         $this->projects()->syncWithoutDetaching([$project->id]);
     }
 
-    public function isRoleOnProject($role, $project)
+    public function isAbleTo($abilitySlug, $projectId)
     {
-        $requiredRole = Role::where('slug', $role)->first();
-        return $this->projects->contains($project)
-            && $this->projects()
-                ->wherePivot('role_id', $requiredRole->id)
-                ->get()
-                ->contains($project);
+        return ProjectUser::where('user_id', $this->id)
+            ->where('project_id', $projectId)
+            ->first()
+            ->isAllowedTo($abilitySlug);
     }
 }

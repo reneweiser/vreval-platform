@@ -41,7 +41,7 @@ class ProjectPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        //
+        return $user->isAbleTo('update-project', $project->id);
     }
 
     /**
@@ -65,7 +65,7 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-        return $user->isRoleOnProject('project-owner', $project);
+        return $user->isAbleTo('delete-project', $project->id);
     }
 
     /**
@@ -93,7 +93,7 @@ class ProjectPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the project.
+     * Determine whether the user can publish the project.
      *
      * @param  \App\User  $user
      * @param  \App\Project  $project
@@ -101,6 +101,18 @@ class ProjectPolicy
      */
     public function publish(User $user, Project $project)
     {
-        return $user->isRoleOnProject('project-owner', $project);
+        return $user->isAbleTo('publish-project', $project->id);
+    }
+
+    /**
+     * Determine whether the user can invite members to the project.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Project  $project
+     * @return mixed
+     */
+    public function invite(User $user, Project $project)
+    {
+        return $user->isAbleTo('invite-project-members', $project->id);
     }
 }
