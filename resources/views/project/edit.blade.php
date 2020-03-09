@@ -23,28 +23,53 @@
     </div>
     @endcomponent
 
-    @component('components.panel', ['title' => 'Edit Models'])
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between">
-            <p class="m-0">Cras justo odio</p>
-            <span>x</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between">
-            <p class="m-0">Dapibus ac facilisis in</p>
-            <span>x</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between">
-            <p class="m-0">Vestibulum at eros</p>
-            <span>x</span>
-        </li>
-    </ul>
-    <div class="card-body">
-        <button class="btn btn-success w-100">Add Model</button>
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card shadow">
+                    @include('includes.card-header', ['title'=>'Playlists'])
+                    <div class="card-body"></div>
+                </div>
+                <div class="card shadow">
+                    @include('includes.card-header', ['title'=>'Results'])
+                    <div class="card-body"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body d-flex justify-content-end">
-        <a class="btn btn-link text-secondary mr-2" href="{{ route('home') }}">Cancel</a>
-        <button class="btn btn-primary" type="submit">Update</button>
+
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card-deck">
+                <div class="card shadow">
+                    @include('includes.card-header', ['title'=>'Models'])
+                    <div class="card-body">
+                        <p>Upload 3d geometry models to use in virtual walkthroughs.</p>
+                        <div class="text-right">
+                            <a href="#" class="btn btn-primary">Edit Models</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow">
+                    @include('includes.card-header', ['title'=>'Forms'])
+                    <div class="card-body">
+                        <p>Create forms for your participants to fill out.</p>
+                        <div class="text-right">
+                            <a href="#" class="btn btn-primary">Edit Forms</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow">
+                    @include('includes.card-header', ['title'=>'Checkpoints'])
+                    <div class="card-body">
+                        <p>Create or upload checkpoints. Checkpoints are predefined locations within the geometry you can attach forms and other behaviour to.</p>
+                        <div class="text-right">
+                            <a href="#" class="btn btn-primary">Edit Checkpoints</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    @endcomponent
 </section>
 @endsection
