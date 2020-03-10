@@ -36,16 +36,16 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu">
-                                    @can('invite-project-members', $project)
+                                    @can("invite.projects.{$project->id}")
                                         <button class="dropdown-item" type="button">Invite User</button>
                                     @endcan
-                                    @can('update-project', $project)
+                                    @can("edit.projects.{$project->id}")
                                         <a class="dropdown-item" href="{{ route('project.edit', ['project' => $project->id]) }}">Edit</a>
                                     @endcan
-                                    @can('publish-project', $project)
+                                    @can("publish.projects.{$project->id}")
                                         <button class="dropdown-item" type="button">Publish</button>
                                     @endcan
-                                    @can('delete-project', $project)
+                                    @can("delete.projects.{$project->id}")
                                         <button class="dropdown-item text-danger" type="button">Delete</button>
                                     @endcan
                                 </div>
@@ -56,7 +56,7 @@
                     @endforelse
                 </ul>
                 <div class="card-footer d-flex justify-content-end">
-                    @can('create-project')
+                    @can('create.projects')
                         <button class="btn btn-success">Create new Project</button>
                     @endcan
                 </div>

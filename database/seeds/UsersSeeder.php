@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 
 class UsersSeeder extends Seeder
 {
@@ -12,7 +13,13 @@ class UsersSeeder extends Seeder
     public function run()
     {
         factory(App\User::class, 5)->create()->each(function ($user) {
-            $user->projects()->saveMany(factory(App\Project::class, 5)->make());
+            $user->givePermissionTo('create.projects');
+            factory(App\Project::class, 5)->create()->each(function ($project) use($user) {
+                $user->projects()->attach($project);
+                Permission::create(['name' => "edit.projects.{$project->id}"]);
+                Permission::create(['name' => "*.projects.{$project->id}"]);
+                $user->givePermissionTo("*.projects.{$project->id}");
+            });
         });
     }
 }

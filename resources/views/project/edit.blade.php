@@ -2,26 +2,44 @@
 
 @section('content')
 <section class="container">
-    @component('components.panel', ['title' => 'Edit Project'])
-    <div class="card-body">
-        <form action="{{ route('project.update', ['project' => $project->id]) }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" class="form-control form-control-lg" name="name" type="text" value="{{ $project->name }}">
+    <div class="row mb-5">
+        <div class="col-md-8">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Edit Project'])
+                <div class="card-body">
+                    <form action="{{ route('project.update', ['project' => $project->id]) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" class="form-control form-control-lg" name="name" type="text" value="{{ $project->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" class="form-control" name="description" rows="3">{{ $project->description }}</textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-link text-secondary mr-2" href="{{ route('home') }}">Cancel</a>
+                            <button class="btn btn-primary" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" class="form-control" name="description" rows="3">{{ $project->description }}</textarea>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Users'])
+                <ul class="list-group list-group-flush">
+                    @foreach ($project->users as $user)
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{$user->name}}</span>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-link text-secondary mr-2" href="{{ route('home') }}">Cancel</a>
-                <button class="btn btn-primary" type="submit">Update</button>
-            </div>
-        </form>
+        </div>
     </div>
-    @endcomponent
+
 
     <div class="row mb-5">
         <div class="col-md-12">
