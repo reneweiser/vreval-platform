@@ -4,19 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +15,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create.projects');
+        return view('project.create');
     }
 
     /**
@@ -35,7 +27,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create.projects');
+        $project = Project::create($this->validateProject());
+        $project->attachOwner(auth()->user());
+        return view('project.edit', ['project' => $project]);
     }
 
     /**
@@ -46,7 +41,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        $this->authorize("show.projects.{$project->id}");
+        return view('project.show', ['project' => $project]);
     }
 
     /**
@@ -57,6 +53,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize("edit.projects.{$project->id}");
         return view('project.edit', ['project' => $project]);
     }
 
@@ -69,6 +66,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        $this->authorize("edit.projects.{$project->id}");
+        $project->update($this->validateProject());
+        $project->save();
         return view('project.edit', ['project' => $project]);
     }
 
@@ -80,6 +80,17 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $this->authorize("delete.projects.{$project->id}");
+        $project->deletePermissions();
+        $project->delete();
+        return redirect(route('home'));
+    }
+
+    private function validateProject()
+    {
+        return request()->validate([
+            'name' => 'required|min:5|max:255',
+            'description' => 'required',
+        ]);
     }
 }

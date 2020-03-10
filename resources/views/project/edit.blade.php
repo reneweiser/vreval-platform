@@ -2,12 +2,18 @@
 
 @section('content')
 <section class="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <a href="{{ route('home') }}" class="btn btn-link">< Back</a>
+        </div>
+    </div>
+    @include('includes.error-alert')
     <div class="row mb-5">
         <div class="col-md-8">
             <div class="card shadow">
                 @include('includes.card-header', ['title'=>'Edit Project'])
                 <div class="card-body">
-                    <form action="{{ route('project.update', ['project' => $project->id]) }}" method="post">
+                    <form action="{{ route('project.update', $project) }}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -33,6 +39,7 @@
                     @foreach ($project->users as $user)
                         <li class="list-group-item d-flex justify-content-between">
                             <span>{{$user->name}}</span>
+                            <span class="small text-muted">{{$user->roleOn($project)}}</span>
                         </li>
                     @endforeach
                 </ul>
@@ -46,11 +53,21 @@
             <div class="card-deck">
                 <div class="card shadow">
                     @include('includes.card-header', ['title'=>'Playlists'])
-                    <div class="card-body"></div>
+                    <div class="card-body">
+                        <p>Playlists provide a way to predefine an order in which scenarios will be presented.</p>
+                        <div class="text-right">
+                            <a href="#" class="btn btn-primary">Edit Playlists</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card shadow">
                     @include('includes.card-header', ['title'=>'Results'])
-                    <div class="card-body"></div>
+                    <div class="card-body">
+                        <p>Look at the data participants generated in walkthroughs.</p>
+                        <div class="text-right">
+                            <a href="#" class="btn btn-primary">View Results</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

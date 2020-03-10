@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    @include('includes.error-alert')
     <div class="row justify-content-center">
         <div class="col-md-12">
             @if (session('status'))
@@ -30,7 +31,7 @@
                 <ul class="list-group list-group-flush">
                     @forelse ($projects as $project)
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <h5 class="m-0">{{ $project->name }}</h5>
+                            <h5 class="m-0"><a href="{{route('project.show', ['project' => $project])}}">{{ $project->name }}</a></h5>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Actions
@@ -46,7 +47,11 @@
                                         <button class="dropdown-item" type="button">Publish</button>
                                     @endcan
                                     @can("delete.projects.{$project->id}")
-                                        <button class="dropdown-item text-danger" type="button">Delete</button>
+                                        <form action="{{ route('project.destroy', $project) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-link text-danger dropdown-item" type="submit">Delete</button>
+                                        </form>
                                     @endcan
                                 </div>
                             </div>
@@ -57,7 +62,7 @@
                 </ul>
                 <div class="card-footer d-flex justify-content-end">
                     @can('create.projects')
-                        <button class="btn btn-success">Create new Project</button>
+                        <a href="{{ route('project.create') }}" class="btn btn-success">Create new Project</a>
                     @endcan
                 </div>
             </div>

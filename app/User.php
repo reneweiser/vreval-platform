@@ -45,4 +45,9 @@ class User extends Authenticatable
             ->as('membership')
             ->withTimestamps();
     }
+
+    public function roleOn(Project $project)
+    {
+        return $this->can("*.projects.{$project->id}") ? 'Owner' : 'Member';
+    }
 }
