@@ -31,9 +31,17 @@
                         <ul class="list-group list-group-flush">
                             @forelse ($projects as $project)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <h5 class="m-0"><a
-                                            href="{{route('project.show', ['project' => $project])}}">{{ $project->name }}</a>
-                                    </h5>
+                                    <div>
+                                        <h5 class="m-0"><a
+                                                href="{{route('project.show', ['project' => $project])}}">{{ $project->name }}</a>
+                                        </h5>
+                                        @can("*.projects.{$project->id}")
+                                            <span class="badge badge-success text-white">Owner</span>
+                                        @endcan
+                                        @if($project->isPublished())
+                                            <span class="badge badge-info text-white">Published</span>
+                                        @endif
+                                    </div>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
                                                 id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
@@ -45,13 +53,55 @@
                                                 <button class="dropdown-item" type="button">Invite User</button>
                                             @endcan
                                             @can("edit.projects.{$project->id}")
-                                                <a class="dropdown-item"
-                                                   href="{{ route('project.edit', ['project' => $project->id]) }}">Edit</a>
+                                                @if (!$project->isPublished())
+                                                    <a class="dropdown-item"
+                                                       href="{{ route('project.edit', ['project' => $project->id]) }}">Edit</a>
+                                                @else
+                                                    <div data-toggle="tooltip"
+                                                         data-placement="left"
+                                                         title="You cannot edit a published project"
+                                                         style="cursor: not-allowed"
+                                                    >
+                                                        <span class="dropdown-item disabled"
+                                                            type="button"
+                                                            title="Editing disabled while published"
+                                                            style="pointer-events:none;"
+                                                        >Edit</span>
+                                                    </div>
+                                                @endif
                                             @endcan
                                             @can("publish.projects.{$project->id}")
-                                                <button class="dropdown-item" type="button">Publish</button>
+                                                @if(!$project->isPublished())
+                                                    <form action="{{ route('project.publisher.edit', ['project' => $project->id])}}"
+                                                          method="post"
+                                                    >
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="published" value="1">
+                                                        <button class="dropdown-item" type="submit">Publish</button>
+                                                    </form>
+                                                    @else
+                                                        <form action="{{ route('project.publisher.edit', ['project' => $project->id])}}"
+                                                            method="post"
+                                                        >
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" name="published" value="0">
+                                                            <button class="dropdown-item" type="submit">Unpublish</button>
+                                                        </form>
+                                                @endif
                                             @endcan
                                             @can("delete.projects.{$project->id}")
+                                                @if ($project->isPublished())
+                                                    <div data-toggle="tooltip"
+                                                        data-placement="left"
+                                                        title="You cannot delete a published projects"
+                                                        style="cursor: not-allowed"
+                                                    >
+                                                        <span class="dropdown-item text-muted"
+                                                            style="pointer-events:none">Delete</span>
+                                                    </div>
+                                                @else
                                                 <form action="{{ route('project.destroy', $project) }}" method="post">
                                                     @csrf
                                                     @method('DELETE')
@@ -59,6 +109,7 @@
                                                             type="submit">Delete
                                                     </button>
                                                 </form>
+                                                @endif
                                             @endcan
                                         </div>
                                     </div>
@@ -77,4 +128,15 @@
             @endif
         </div>
     </div>
+    @component('components.modal')
+        <p>test</p>
+    @endcomponent
+@endsection
+
+@section('scripts')
+    <script defer>
+        window.$(function () {
+            window.$('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @endsection

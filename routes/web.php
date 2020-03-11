@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('project', 'ProjectController')
     ->except(['index'])
     ->middleware('auth');
+
+Route::put('project/{project}/publisher', 'ProjectPublishController@update')
+    ->name('project.publisher.edit')
+    ->middleware('auth');

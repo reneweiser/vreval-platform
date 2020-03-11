@@ -7,8 +7,13 @@ use Spatie\Permission\Models\Permission;
 
 class Project extends Model {
     protected $fillable = [
-        'name', 'description'
+        'name', 'description', 'published'
     ];
+
+    public function isPublished()
+    {
+        return $this->published !== null;
+    }
 
     public function users()
     {
