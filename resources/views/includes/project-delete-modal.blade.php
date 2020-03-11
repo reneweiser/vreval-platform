@@ -11,7 +11,7 @@
                 <p>This will also delete all it's components permanently:</p>
                 <ul>
                     <li>Forms</li>
-                    <li>Models that were uploaded</li>
+                    <li>Uploaded models</li>
                     <li>Checkpoints</li>
                     <li>Playlists</li>
                     <li>Results</li>

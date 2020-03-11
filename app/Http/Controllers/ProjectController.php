@@ -18,12 +18,12 @@ class ProjectController extends Controller
         $this->authorize('create.projects');
         $project = Project::create($this->validateProject());
         $project->attachOwner(auth()->user());
-        return view('project.edit', ['project' => $project]);
+        return redirect(route('project.edit', ['project' => $project]));
     }
 
     public function show(Project $project)
     {
-        $this->authorize("show.projects.{$project->id}");
+        $this->authorize("edit.projects.{$project->id}");
         return view('project.show', ['project' => $project]);
     }
 

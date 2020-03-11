@@ -95,7 +95,7 @@
                                     </div>
                                 </li>
                             @empty
-                                <p>You don't have and Projects yet.</p>
+                                <p class="m-0 p-4 text-center lead text-muted">You don't have any Projects yet.</p>
                             @endforelse
                         </ul>
                         @if($projects->hasPages())

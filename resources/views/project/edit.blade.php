@@ -2,11 +2,6 @@
 
 @section('content')
 <section class="container">
-    <div class="row mb-2">
-        <div class="col-12">
-            <a href="{{ route('home') }}" class="btn btn-link">< Back</a>
-        </div>
-    </div>
     @include('includes.error-alert')
     <div class="row mb-5">
         <div class="col-md-8">
@@ -25,7 +20,7 @@
                             <textarea id="description" class="form-control" name="description" rows="3">{{ $project->description }}</textarea>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <a class="btn btn-link text-secondary mr-2" href="{{ route('home') }}">Cancel</a>
+                            <a class="btn btn-link text-secondary mr-2" href="{{ route('dashboard') }}">Cancel</a>
                             <button class="btn btn-primary" type="submit">Update</button>
                         </div>
                     </form>
@@ -49,24 +44,24 @@
 
 
     <div class="row mb-5">
-        <div class="col-md-12">
-            <div class="card-deck">
-                <div class="card shadow">
-                    @include('includes.card-header', ['title'=>'Playlists'])
-                    <div class="card-body">
-                        <p>Playlists provide a way to predefine an order in which scenarios will be presented.</p>
-                        <div class="text-right">
-                            <a href="#" class="btn btn-primary">Edit Playlists</a>
-                        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Playlists'])
+                <div class="card-body">
+                    <p>Playlists provide a way to predefine an order in which scenarios will be presented.</p>
+                    <div class="text-right">
+                        <a href="#" class="btn btn-primary">Edit Playlists</a>
                     </div>
                 </div>
-                <div class="card shadow">
-                    @include('includes.card-header', ['title'=>'Results'])
-                    <div class="card-body">
-                        <p>Look at the data participants generated in walkthroughs.</p>
-                        <div class="text-right">
-                            <a href="#" class="btn btn-primary">View Results</a>
-                        </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Results'])
+                <div class="card-body">
+                    <p>Look at the data participants generated in walkthroughs.</p>
+                    <div class="text-right">
+                        <a href="#" class="btn btn-primary">View Results</a>
                     </div>
                 </div>
             </div>
@@ -74,33 +69,35 @@
     </div>
 
     <div class="row mb-5">
-        <div class="col-md-12">
-            <div class="card-deck">
-                <div class="card shadow">
-                    @include('includes.card-header', ['title'=>'Models'])
-                    <div class="card-body">
-                        <p>Upload 3d geometry models to use in virtual walkthroughs.</p>
-                        <div class="text-right">
-                            <a href="#" class="btn btn-primary">Edit Models</a>
-                        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Models'])
+                <div class="card-body">
+                    <p>Upload 3d geometry models to use in virtual walkthroughs.</p>
+                    <div class="text-right">
+                        <a href="#" class="btn btn-primary">Edit Models</a>
                     </div>
                 </div>
-                <div class="card shadow">
-                    @include('includes.card-header', ['title'=>'Forms'])
-                    <div class="card-body">
-                        <p>Create forms for your participants to fill out.</p>
-                        <div class="text-right">
-                            <a href="#" class="btn btn-primary">Edit Forms</a>
-                        </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Forms'])
+                <div class="card-body">
+                    <p>Create forms for your participants to fill out.</p>
+                    <div class="text-right">
+                        <a href="#" class="btn btn-primary">Edit Forms</a>
                     </div>
                 </div>
-                <div class="card shadow">
-                    @include('includes.card-header', ['title'=>'Checkpoints'])
-                    <div class="card-body">
-                        <p>Create or upload checkpoints. Checkpoints are predefined locations within the geometry you can attach forms and other behaviour to.</p>
-                        <div class="text-right">
-                            <a href="#" class="btn btn-primary">Edit Checkpoints</a>
-                        </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow">
+                @include('includes.card-header', ['title'=>'Checkpoints'])
+                <div class="card-body">
+                    <p>Create or upload checkpoints. Checkpoints are predefined locations within the geometry you can attach forms and other behaviour to.</p>
+                    <div class="text-right">
+                        <a href="#" class="btn btn-primary">Edit Checkpoints</a>
                     </div>
                 </div>
             </div>
