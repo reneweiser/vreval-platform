@@ -95,16 +95,16 @@
                                                 @if ($project->isPublished())
                                                     <div data-toggle="tooltip"
                                                         data-placement="left"
-                                                        title="You cannot delete a published projects"
+                                                        title="You cannot delete a published project"
                                                         style="cursor: not-allowed"
                                                     >
                                                         <span class="dropdown-item text-muted"
                                                             style="pointer-events:none">Delete</span>
                                                     </div>
                                                 @else
-                                                <button class="dropdown-item text-danger"
-                                                    data-toggle="modal"
-                                                    data-target="#delete-project-{{$project->id}}">Delete</button>
+                                                    <button class="dropdown-item text-danger"
+                                                        data-toggle="modal"
+                                                        data-target="#delete-project-{{$project->id}}">Delete</button>
                                                 @endif
                                             @endcan
                                         </div>
@@ -125,17 +125,7 @@
         </div>
     </div>
     @foreach ($projects as $project)
-        @component('components.modal', [
-            'title' => "Delete \"{$project->name}\"?",
-            'message' => "This will delete the project and all it's components permanently.",
-            'id' => $project->id
-        ])
-            <form action="{{ route('project.destroy', $project) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger" type="submit">Delete</button>
-            </form>
-        @endcomponent
+        @include('includes.project-delete-modal', ['project' => $project])
     @endforeach
 @endsection
 
