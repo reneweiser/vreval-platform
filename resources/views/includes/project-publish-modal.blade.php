@@ -33,7 +33,7 @@
                 <p>Do you want to continue?</p>
             </div>
             <div class="modal-footer">
-                <form action="{{ route('project.publisher.edit', ['project' => $project->id])}}"
+                <form action="{{ route('projects.publisher.edit', ['project' => $project->id])}}"
                     method="post"
                 >
                     @csrf

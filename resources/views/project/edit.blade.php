@@ -8,7 +8,7 @@
             <div class="card shadow">
                 @include('includes.card-header', ['title'=>'Edit Project'])
                 <div class="card-body">
-                    <form action="{{ route('project.update', $project) }}" method="post">
+                    <form action="{{ route('projects.update', $project) }}" method="post">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -88,7 +88,7 @@
                 <div class="card-body">
                     <p>Create forms for your participants to fill out.</p>
                     <div class="text-right">
-                        <a href="#" class="btn btn-primary">Edit Forms</a>
+                        <a href="{{ route('forms.index', ['project' => $project]) }}" class="btn btn-primary">Edit Forms</a>
                     </div>
                 </div>
             </div>

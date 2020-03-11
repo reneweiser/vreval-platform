@@ -19,7 +19,7 @@
                 <p>Are you sure you want to proceed?</p>
             </div>
             <div class="modal-footer">
-                <form action="{{ route('project.destroy', $project) }}" method="post">
+                <form action="{{ route('projects.destroy', $project) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>

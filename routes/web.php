@@ -19,10 +19,13 @@ Auth::routes();
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
-Route::resource('project', 'ProjectController')
+Route::resource('projects', 'ProjectController')
     ->except(['index'])
     ->middleware('auth');
 
-Route::put('project/{project}/publisher', 'ProjectPublishController@update')
-    ->name('project.publisher.edit')
+Route::put('projects/{project}/publisher', 'ProjectPublishController@update')
+    ->name('projects.publisher.edit')
+    ->middleware('auth');
+
+Route::resource('projects/{project}/forms', 'FormController')
     ->middleware('auth');

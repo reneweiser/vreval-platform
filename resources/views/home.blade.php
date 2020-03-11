@@ -33,7 +33,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
                             <h5 class="m-0"><a
-                                    href="{{route('project.show', ['project' => $project])}}">{{ $project->name }}</a>
+                                    href="{{route('projects.show', ['project' => $project])}}">{{ $project->name }}</a>
                             </h5>
                             @can("*.projects.{$project->id}")
                             <span class="badge badge-success text-white">Owner</span>
@@ -56,7 +56,7 @@
                                 @can("edit.projects.{$project->id}")
                                 @if (!$project->isPublished())
                                 <a class="dropdown-item"
-                                    href="{{ route('project.edit', ['project' => $project->id]) }}">Edit</a>
+                                    href="{{ route('projects.edit', ['project' => $project->id]) }}">Edit</a>
                                 @else
                                 <div data-toggle="tooltip" data-placement="left"
                                     title="You cannot edit a published project" style="cursor: not-allowed">
@@ -96,7 +96,7 @@
                 @endif
                 <div class="card-footer d-flex justify-content-end">
                     @can('create.projects')
-                    <a href="{{ route('project.create') }}" class="btn btn-success">Create new Project</a>
+                    <a href="{{ route('projects.create') }}" class="btn btn-success">Create new Project</a>
                     @endcan
                 </div>
             </div>
