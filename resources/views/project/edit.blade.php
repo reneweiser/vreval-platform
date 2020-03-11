@@ -13,11 +13,13 @@
                         @method('PUT')
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input id="name" class="form-control form-control-lg" name="name" type="text" value="{{ $project->name }}">
+                            <input id="name" class="form-control form-control-lg" name="name" type="text"
+                                value="{{ $project->name }}">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" class="form-control" name="description" rows="3">{{ $project->description }}</textarea>
+                            <textarea id="description" class="form-control" name="description"
+                                rows="3">{{ $project->description }}</textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-link text-secondary mr-2" href="{{ route('dashboard') }}">Cancel</a>
@@ -32,10 +34,10 @@
                 @include('includes.card-header', ['title'=>'Users'])
                 <ul class="list-group list-group-flush">
                     @foreach ($project->users as $user)
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>{{$user->name}}</span>
-                            <span class="small text-muted">{{$user->roleOn($project)}}</span>
-                        </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>{{$user->name}}</span>
+                        <span class="small text-muted">{{$user->roleOn($project)}}</span>
+                    </li>
                     @endforeach
                 </ul>
             </div>
@@ -95,7 +97,8 @@
             <div class="card shadow">
                 @include('includes.card-header', ['title'=>'Checkpoints'])
                 <div class="card-body">
-                    <p>Create or upload checkpoints. Checkpoints are predefined locations within the geometry you can attach forms and other behaviour to.</p>
+                    <p>Create or upload checkpoints. Checkpoints are predefined locations within the geometry you can
+                        attach forms and other behaviour to.</p>
                     <div class="text-right">
                         <a href="#" class="btn btn-primary">Edit Checkpoints</a>
                     </div>
