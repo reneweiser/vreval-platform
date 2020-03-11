@@ -63,33 +63,17 @@
                                                          style="cursor: not-allowed"
                                                     >
                                                         <span class="dropdown-item disabled"
-                                                            type="button"
-                                                            title="Editing disabled while published"
-                                                            style="pointer-events:none;"
-                                                        >Edit</span>
+                                                            style="pointer-events:none;">Edit</span>
                                                     </div>
                                                 @endif
                                             @endcan
                                             @can("publish.projects.{$project->id}")
-                                                @if(!$project->isPublished())
-                                                    <form action="{{ route('project.publisher.edit', ['project' => $project->id])}}"
-                                                          method="post"
-                                                    >
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="hidden" name="published" value="1">
-                                                        <button class="dropdown-item" type="submit">Publish</button>
-                                                    </form>
-                                                    @else
-                                                        <form action="{{ route('project.publisher.edit', ['project' => $project->id])}}"
-                                                            method="post"
-                                                        >
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <input type="hidden" name="published" value="0">
-                                                            <button class="dropdown-item" type="submit">Unpublish</button>
-                                                        </form>
-                                                @endif
+                                                <button class="dropdown-item"
+                                                    data-toggle="modal"
+                                                    data-target="#publish-project-{{$project->id}}"
+                                                >
+                                                    {{ $project->isPublished() ? 'Unpublish' : 'Publish' }}
+                                                </button>
                                             @endcan
                                             @can("delete.projects.{$project->id}")
                                                 @if ($project->isPublished())
@@ -114,6 +98,9 @@
                                 <p>You don't have and Projects yet.</p>
                             @endforelse
                         </ul>
+                        @if($projects->hasPages())
+                            <div class="card-body">{{$projects->links()}}</div>
+                        @endif
                         <div class="card-footer d-flex justify-content-end">
                             @can('create.projects')
                                 <a href="{{ route('project.create') }}" class="btn btn-success">Create new Project</a>
@@ -125,7 +112,12 @@
         </div>
     </div>
     @foreach ($projects as $project)
+        @can("publish.projects.{$project->id}")
+        @include('includes.project-publish-modal', ['project' => $project])
+        @endcan
+        @can("delete.projects.{$project->id}")
         @include('includes.project-delete-modal', ['project' => $project])
+        @endcan
     @endforeach
 @endsection
 
