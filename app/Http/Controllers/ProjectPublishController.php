@@ -14,6 +14,7 @@ class ProjectPublishController extends Controller
             'published' => $request->published === '0' ? null : now()
         ]);
         $project->save();
+
         return redirect(route('home'));
     }
 }
