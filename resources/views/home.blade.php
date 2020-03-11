@@ -102,13 +102,9 @@
                                                             style="pointer-events:none">Delete</span>
                                                     </div>
                                                 @else
-                                                <form action="{{ route('project.destroy', $project) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-link text-danger dropdown-item"
-                                                            type="submit">Delete
-                                                    </button>
-                                                </form>
+                                                <button class="dropdown-item text-danger"
+                                                    data-toggle="modal"
+                                                    data-target="#delete-project-{{$project->id}}">Delete</button>
                                                 @endif
                                             @endcan
                                         </div>
@@ -128,9 +124,19 @@
             @endif
         </div>
     </div>
-    @component('components.modal')
-        <p>test</p>
-    @endcomponent
+    @foreach ($projects as $project)
+        @component('components.modal', [
+            'title' => "Delete \"{$project->name}\"?",
+            'message' => "This will delete the project and all it's components permanently.",
+            'id' => $project->id
+        ])
+            <form action="{{ route('project.destroy', $project) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger" type="submit">Delete</button>
+            </form>
+        @endcomponent
+    @endforeach
 @endsection
 
 @section('scripts')
