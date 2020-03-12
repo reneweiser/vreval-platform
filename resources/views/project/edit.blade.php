@@ -6,7 +6,12 @@
     <div class="row mb-5">
         <div class="col-md-8">
             <div class="card shadow">
-                @include('includes.card-header', ['title'=>'Edit Project'])
+                @include('includes.card-header-breadcrumb', [
+                    'fragments' => [
+                        ['routeName' => 'dashboard', 'routeData' => ['project' => $project->id], 'name' => 'Dashboard'],
+                    ],
+                    'currentName' => $project->name
+                ])
                 <div class="card-body">
                     <form action="{{ route('projects.update', $project) }}" method="post">
                         @csrf

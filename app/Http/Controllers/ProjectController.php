@@ -20,7 +20,7 @@ class ProjectController extends Controller
         $project = Project::create($this->validateProject($request));
         $project->attachOwner(auth()->user());
 
-        return redirect(route('project.edit', ['project' => $project]));
+        return redirect(route('projects.edit', ['project' => $project]));
     }
 
     public function show(Project $project)
@@ -43,7 +43,7 @@ class ProjectController extends Controller
         $project->update($this->validateProject($request));
         $project->save();
 
-        return redirect(route('project.edit', ['project' => $project]));
+        return redirect(route('projects.edit', ['project' => $project]));
     }
 
     public function destroy(Project $project)

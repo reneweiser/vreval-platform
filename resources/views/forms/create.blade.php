@@ -5,9 +5,16 @@
     <div class="row mb-5">
         <div class="col-md-12">
             <div class="card shadow">
-                @include('includes.card-header', ['title'=>'Create Project'])
+                @include('includes.card-header-breadcrumb', [
+                    'fragments' => [
+                        ['routeName' => 'dashboard', 'routeData' => ['project' => $project->id], 'name' => 'Dashboard'],
+                        ['routeName' => 'projects.edit', 'routeData' => ['project' => $project->id], 'name' => $project->name],
+                        ['routeName' => 'forms.index', 'routeData' => ['project' => $project->id], 'name' => 'Forms']
+                    ],
+                    'currentName' => 'Create'
+                ])
                 <div class="card-body">
-                    <form action="{{ route('projects.store') }}" method="post">
+                    <form action="{{ route('forms.store', ['project' => $project]) }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -26,8 +33,10 @@
                             <p class="m-0 help text-danger">{{ $errors->first('description') }}</p>
                             @enderror
                         </div>
+                        <form-builder template="{{ old('template') }}"></form-builder>
+                        <hr class="my-4">
                         <div class="d-flex justify-content-end">
-                            <a class="btn btn-link text-secondary mr-2" href="{{ route('dashboard') }}">Cancel</a>
+                            <a class="btn btn-link text-secondary mr-2" href="{{ route('forms.index', ['project' => $project]) }}">Cancel</a>
                             <button class="btn btn-primary" type="submit">Create</button>
                         </div>
                     </form>

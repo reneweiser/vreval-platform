@@ -22,6 +22,11 @@ class Project extends Model {
             ->withTimestamps();
     }
 
+    public function forms()
+    {
+        return $this->hasMany(Form::class);
+    }
+
     public function attachOwner(User $user)
     {
         $permission = Permission::create(['name' => "*.projects.{$this->id}"]);
