@@ -20,6 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('text-input', require('./components/input/Text.vue').default);
+Vue.component('text-area', require('./components/input/TextArea.vue').default);
+Vue.component('selection', require('./components/input/Select.vue').default);
 Vue.component('form-builder', require('./components/FormFieldBuilder.vue').default);
 
 /**
