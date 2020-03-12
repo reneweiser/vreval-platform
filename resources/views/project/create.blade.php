@@ -26,6 +26,7 @@
                             <p class="m-0 help text-danger">{{ $errors->first('description') }}</p>
                             @enderror
                         </div>
+                        <hr class="my-4">
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-link text-secondary mr-2" href="{{ route('dashboard') }}">Cancel</a>
                             <button class="btn btn-primary" type="submit">Create</button>

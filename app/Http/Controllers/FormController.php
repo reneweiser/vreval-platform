@@ -29,7 +29,7 @@ class FormController extends Controller
     public function store(Request $request, Project $project)
     {
         $this->authorize("edit.projects.{$project->id}");
-        $form = Form::make($this->validateForm($request, $project));
+        $form = new Form($this->validateForm($request, $project));
         $form->project()->associate($project);
         $form->save();
 
@@ -44,6 +44,7 @@ class FormController extends Controller
     public function edit(Project $project, Form $form)
     {
         $this->authorize("edit.projects.{$project->id}");
+
         return view('forms.edit', [
             'project' => $project,
             'form' => $form

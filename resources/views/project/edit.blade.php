@@ -26,6 +26,7 @@
                             <textarea id="description" class="form-control" name="description"
                                 rows="3">{{ $project->description }}</textarea>
                         </div>
+                        <hr class="my-4">
                         <div class="d-flex justify-content-end">
                             <a class="btn btn-link text-secondary mr-2" href="{{ route('dashboard') }}">Cancel</a>
                             <button class="btn btn-primary" type="submit">Update</button>
